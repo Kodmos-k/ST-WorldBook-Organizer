@@ -1,0 +1,11 @@
+{
+  "display_name": "世界书原生分类筛选",
+  "loading_order": -1,
+  "requires": [],
+  "optional": [],
+  "js": "index.js",
+  "css": "style.css",
+  "author": "Kodmos",
+  "version": "1.0",
+  "homePage": ""
+}
