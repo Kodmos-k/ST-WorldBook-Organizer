@@ -1,40 +1,56 @@
-/* Native World Info manager integration */
+/* ==========================================================================
+   ST-WorldBook-Organizer — 世界书原生分类筛选 + 自定义分组
+   ========================================================================== */
+
+/* hidden 属性优先级兜底（避免 display:grid 覆盖 [hidden]） */
+#st-wb-native-filter-toolbar [hidden],
+#st-wb-native-filter-global-toolbar [hidden] {
+    display: none !important;
+}
+
+/* ---------- 原生世界书编辑器：工具栏 ---------- */
 #st-wb-native-filter-toolbar {
     display: block;
-    width: 100%;
     box-sizing: border-box;
+    width: 100%;
     margin: 8px 0 10px;
     padding: 10px;
     border: 1px solid var(--SmartThemeBorderColor, #666);
     border-radius: 8px;
     white-space: normal;
 }
+
 .st-wb-native-filter-heading {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 8px;
-    margin-bottom: 8px;
     flex-wrap: wrap;
+    margin-bottom: 8px;
 }
+
 .st-wb-native-filter-heading strong {
     display: inline-block;
     white-space: nowrap;
     writing-mode: horizontal-tb;
     word-break: keep-all;
 }
+
 .st-wb-native-filter-heading span,
-.st-wb-native-filter-note {
+.st-wb-native-filter-global-count {
     font-size: .85em;
     opacity: .72;
+    font-variant-numeric: tabular-nums;
 }
+
 .st-wb-native-filter-controls {
     display: grid;
-    grid-template-columns: minmax(110px, .75fr) minmax(150px, 1fr) minmax(190px, 1.4fr);
+    grid-template-columns: minmax(0, .8fr) minmax(0, 1fr) minmax(0, 1.3fr);
     gap: 8px;
     align-items: center;
     width: 100%;
 }
+
 .st-wb-native-filter-controls select,
 .st-wb-native-filter-controls input {
     box-sizing: border-box;
@@ -46,73 +62,164 @@
     white-space: nowrap;
     writing-mode: horizontal-tb;
     word-break: normal;
+    text-overflow: ellipsis;
 }
-.st-wb-native-filter-note {
-    margin: 7px 0 0;
+
+.st-wb-native-filter-heading-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
+
+.st-wb-native-filter-heading button,
+.st-wb-native-filter-group-row button,
+.st-wb-native-filter-group-edit button {
+    min-height: 28px;
+    padding: 3px 10px;
+    border: 1px solid var(--SmartThemeBorderColor, #555);
+    border-radius: 5px;
+    background: var(--SmartThemeBlurTintColor, #292a30);
+    color: var(--SmartThemeBodyColor, #eee);
+    font: inherit;
+    font-size: .85em;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.st-wb-native-filter-heading button:hover,
+.st-wb-native-filter-group-row button:hover,
+.st-wb-native-filter-group-edit button:hover {
+    filter: brightness(1.15);
+}
+
+/* ---------- 分组管理面板 ---------- */
+.st-wb-native-filter-group-panel {
+    margin-top: 8px;
+    padding: 8px;
+    border: 1px dashed var(--SmartThemeBorderColor, #555);
+    border-radius: 6px;
+}
+
+.st-wb-native-filter-group-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.st-wb-native-filter-group-label {
+    font-size: .9em;
+    white-space: nowrap;
+}
+
+.st-wb-native-filter-group-row select {
+    flex: 1 1 10em;
+    min-width: 0;
+    min-height: 30px;
+    box-sizing: border-box;
+    padding: 4px 8px;
+    border: 1px solid var(--SmartThemeBorderColor, #555);
+    border-radius: 5px;
+    background: var(--SmartThemeBlurTintColor, #292a30);
+    color: var(--SmartThemeBodyColor, #eee);
+    font: inherit;
+    font-size: .9em;
+    text-overflow: ellipsis;
+}
+
+.st-wb-native-filter-group-edit {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.st-wb-native-filter-group-edit input {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 30px;
+    box-sizing: border-box;
+    padding: 4px 8px;
+    border: 1px solid var(--SmartThemeBorderColor, #555);
+    border-radius: 5px;
+    background: var(--SmartThemeBlurTintColor, #292a30);
+    color: var(--SmartThemeBodyColor, #eee);
+    font: inherit;
+    font-size: .9em;
+}
+
+.st-wb-native-filter-group-books {
+    display: grid;
+    gap: 1px;
+    max-height: 220px;
+    margin-top: 6px;
+    overflow-y: auto;
+}
+
+.st-wb-native-filter-group-book {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 4px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.st-wb-native-filter-group-book:hover {
+    background: rgba(127, 127, 127, .12);
+}
+
+.st-wb-native-filter-group-book input {
+    flex: 0 0 auto;
+    margin: 0;
+}
+
+.st-wb-native-filter-group-book span {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.st-wb-native-filter-group-book small {
+    flex: 0 0 auto;
+    opacity: .7;
+    white-space: nowrap;
+}
+
+.st-wb-native-filter-group-empty {
+    margin: 6px 0 0;
+    font-size: .9em;
+    opacity: .7;
+}
+
 @media (max-width: 700px) {
     .st-wb-native-filter-controls {
         grid-template-columns: minmax(0, 1fr);
     }
+
     .st-wb-native-filter-heading {
         align-items: flex-start;
     }
 }
-/* Fix accidental vertical/wrapping text in the older prototype's entry button, if it remains cached. */
-#st-worldbook-organizer-open {
-    width: auto !important;
-    min-width: max-content !important;
-    white-space: nowrap !important;
-    writing-mode: horizontal-tb !important;
-    word-break: keep-all !important;
-    overflow-wrap: normal !important;
+
+@media (max-width: 520px) {
+    .st-wb-native-filter-group-row select {
+        flex-basis: 100%;
+    }
+
+    .st-wb-native-filter-group-row button {
+        flex: 1 1 auto;
+    }
 }
-/* Filter toolbar in the native global-worldbook activation area */
-#st-wb-native-filter-global-toolbar {
-  display: block;
-  width: 100%;
-  margin: 0 0 0.5em;
-  padding: 0.65em;
-  box-sizing: border-box;
-  border: 1px solid var(--SmartThemeBorderColor, #555);
-  border-radius: 8px;
-  background: var(--SmartThemeBlurTintColor, rgba(30, 30, 30, .8));
-  color: var(--SmartThemeBodyColor, inherit);
-}
-#st-wb-native-filter-global-toolbar .st-wb-native-filter-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: .75em;
-  flex-wrap: wrap;
-  margin-bottom: .5em;
-}
-#st-wb-native-filter-global-toolbar .st-wb-native-filter-controls {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: .5em;
-}
-#st-wb-native-filter-global-toolbar input,
-#st-wb-native-filter-global-toolbar select,
-#st-wb-native-filter-global-toolbar button {
-  color: var(--SmartThemeBodyColor, inherit);
-  background: var(--SmartThemeBlurTintColor, #292a30);
-  border: 1px solid var(--SmartThemeBorderColor, #555);
-  border-radius: 6px;
-  padding: .45em .65em;
-  max-width: 100%;
-  box-sizing: border-box;
-  writing-mode: horizontal-tb;
-}
-#st-wb-native-filter-global-toolbar input { flex: 1 1 12em; min-width: 8em; }
-#st-wb-native-filter-global-toolbar input::placeholder { color: var(--SmartThemeEmColor, #aaa); opacity: .8; }
-/* Native #world_info Select2 dropdown filter */
+
+/* ---------- 全局世界书 Select2 下拉框内的筛选条 ---------- */
 #st-wb-native-filter-global-toolbar {
     box-sizing: border-box;
     width: 100%;
-    padding: 10px;
     margin: 0;
+    padding: 10px;
     border-bottom: 1px solid var(--SmartThemeBorderColor, #555);
     background: var(--SmartThemeBlurTintColor, #25262b);
     color: var(--SmartThemeBodyColor, #eee);
@@ -120,23 +227,12 @@
 }
 
 #st-wb-native-filter-global-toolbar .st-wb-native-filter-heading {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 6px;
     margin-bottom: 8px;
-}
-
-#st-wb-native-filter-global-toolbar .st-wb-native-filter-heading strong {
-    writing-mode: horizontal-tb;
-    white-space: nowrap;
-    word-break: keep-all;
 }
 
 #st-wb-native-filter-global-toolbar .st-wb-native-filter-global-controls {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr) auto;
+    grid-template-columns: minmax(0, 1fr) minmax(0, .8fr) auto;
     align-items: center;
     gap: 6px;
 }
@@ -156,14 +252,9 @@
     background: var(--SmartThemeBlurTintColor, #292a30);
     color: var(--SmartThemeBodyColor, #eee);
     font: inherit;
-    font-size: 0.9em;
+    font-size: .9em;
     writing-mode: horizontal-tb;
     white-space: normal;
-}
-
-#st-wb-native-filter-global-toolbar input::placeholder {
-    color: var(--SmartThemeEmColor, #aaa);
-    opacity: 0.85;
 }
 
 #st-wb-native-filter-global-toolbar button {
@@ -178,21 +269,107 @@
     }
 }
 
-
-/* 世界书分类筛选：修正分类下拉框与搜索框的白色背景 */
+/* ---------- 主题兜底 ----------
+   部分主题会把下拉框 / 输入框刷成白底，导致文字看不清；
+   这里统一压回主题色（仅覆盖颜色相关属性）。
+   复选框保持酒馆原生样式，不参与覆盖。 */
 #st-wb-native-filter-toolbar select,
-#st-wb-native-filter-toolbar input,
+#st-wb-native-filter-toolbar input:not([type="checkbox"]),
+#st-wb-native-filter-toolbar button,
 #st-wb-native-filter-global-toolbar select,
-#st-wb-native-filter-global-toolbar input {
+#st-wb-native-filter-global-toolbar input:not([type="checkbox"]),
+#st-wb-native-filter-global-toolbar button {
     background: var(--SmartThemeBlurTintColor, #222) !important;
     background-color: var(--SmartThemeBlurTintColor, #222) !important;
     color: var(--SmartThemeBodyColor, #eee) !important;
-    border: 1px solid var(--SmartThemeBorderColor, #555) !important;
+    border-color: var(--SmartThemeBorderColor, #555) !important;
     box-shadow: none !important;
+}
+
+#st-wb-native-filter-toolbar option,
+#st-wb-native-filter-global-toolbar option {
+    background: var(--SmartThemeBlurTintColor, #222);
+    color: var(--SmartThemeBodyColor, #eee);
 }
 
 #st-wb-native-filter-toolbar input::placeholder,
 #st-wb-native-filter-global-toolbar input::placeholder {
     color: var(--SmartThemeEmColor, #aaa) !important;
     opacity: 1 !important;
+}
+
+/* ---------- 手机端：已启用的世界书筛选 ---------- */
+#WIMultiSelector > .range-block-title.st-wb-native-filter-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.st-wb-native-filter-mobile {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+}
+
+.st-wb-native-filter-mobile button {
+    min-width: 30px;
+    min-height: 30px;
+    padding: 0 6px;
+    border: 1px solid var(--SmartThemeBorderColor, #555);
+    border-radius: 5px;
+    background: var(--SmartThemeBlurTintColor, #292a30);
+    color: var(--SmartThemeBodyColor, #eee);
+    font-size: .85em;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.st-wb-native-filter-mobile button:hover {
+    filter: brightness(1.15);
+}
+
+.st-wb-native-filter-mobile select {
+    max-width: 7.5em;
+    min-height: 30px;
+    padding: 2px 4px;
+    border: 1px solid var(--SmartThemeBorderColor, #555);
+    border-radius: 5px;
+    background: var(--SmartThemeBlurTintColor, #292a30);
+    color: var(--SmartThemeBodyColor, #eee);
+    font: inherit;
+    font-size: .8em;
+}
+
+.st-wb-native-filter-mobile select option {
+    background: var(--SmartThemeBlurTintColor, #222);
+    color: var(--SmartThemeBodyColor, #eee);
+}
+
+.st-wb-native-filter-mobile-search {
+    width: 100%;
+    margin: 4px 0 2px;
+}
+
+.st-wb-native-filter-mobile-search[hidden] {
+    display: none !important;
+}
+
+.st-wb-native-filter-mobile-search input {
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 30px;
+    padding: 4px 8px;
+    border: 1px solid var(--SmartThemeBorderColor, #555);
+    border-radius: 5px;
+    background: var(--SmartThemeBlurTintColor, #292a30);
+    color: var(--SmartThemeBodyColor, #eee);
+    font: inherit;
+    font-size: .9em;
+}
+
+.st-wb-native-filter-mobile-search input::placeholder {
+    color: var(--SmartThemeEmColor, #aaa);
 }
